@@ -5,9 +5,10 @@ BBFILES ?= ""
 
 BBLAYERS ?= " \
   ##OEROOT##/meta \
-  ##OEROOT##/meta-oe \
-  ##OEROOT##/meta-multimedia \
-  ##OEROOT##/meta-networking \
-  ##OEROOT##/meta-python \
+  ##OEROOT##/meta-poky \
+  ##OEROOT##/meta-openembedded/meta-oe/ \
+  ##OEROOT##/meta-openembedded/meta-multimedia \
+  ##OEROOT##/meta-openembedded/meta-networking \
+  ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-raspberrypi \
   "
