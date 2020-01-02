@@ -1,0 +1,13 @@
+POKY_BBLAYERS_CONF_VERSION = "1"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  ##OEROOT##/meta \
+  ##OEROOT##/meta-oe \
+  ##OEROOT##/meta-multimedia \
+  ##OEROOT##/meta-networking \
+  ##OEROOT##/meta-python \
+  ##OEROOT##/meta-raspberrypi \
+  "

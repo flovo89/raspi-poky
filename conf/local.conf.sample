@@ -1,0 +1,52 @@
+# Machine selection
+MACHINE ??= "raspberrypi"
+
+# Distribution selection
+DISTRO ?= ""
+
+# Packages manager
+PACKAGE_CLASSES ?= "package_ipk"
+
+# Cross SDK architecture
+#SDKMACHINE ?= "i686"
+SDKMACHINE ?= "x86_64"
+
+# Disk space monitoring
+BB_DISKMON_DIRS = "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    ABORT,${TMPDIR},100M,1K \
+    ABORT,${DL_DIR},100M,1K \
+    ABORT,${SSTATE_DIR},100M,1K \
+    ABORT,/tmp,10M,1K"
+
+# Free some space after build
+INHERIT += "rm_work"
+
+# Slow down the build on development machine
+#PARALLEL_MAKE = "-j1"
+#BB_NUMBER_THREADS = "10"
+
+# Default image timezone
+DEFAULT_TIMEZONE = "Europe/Berlin"
+
+# Package repository
+PACKAGE_FEED_BASE_PATHS = "ipk"
+PACKAGE_FEED_ARCHS = "all"
+
+# Use a PR server
+PRSERV_HOST = "localhost:0"
+
+# Required to fetch source with git ssh protocol
+HOSTTOOLS += "ssh"
+
+# Configuration version
+CONF_VERSION = "1"
+
+# Remove host contamination warning
+#WARN_QA_remove = "host-user-contaminated"
+
+# config to generate a source tarballs
+BB_GENERATE_MIRROR_TARBALLS = "1"

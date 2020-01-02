@@ -1,0 +1,6 @@
+# List of meta-layer to be fetched
+# path;URL;branch, tag or revision
+################################################################################
+poky;http://git.yoctoproject.org/git/poky;master
+poky/meta-openembedded;https://github.com/openembedded/meta-openembedded.git;master
+poky/meta-raspberrypi;https://github.com/agherzan/meta-raspberrypi.git;master
