@@ -134,7 +134,7 @@ build_sdk()
 # Copy generated files in deploy directory for convenience
 update_deploy_dir()
 {
-  IMAGES_DIR=${BUILD_DIR}/tmp/deploy/images/${MACHINE}
+  IMAGES_DIR=${BUILD_DIR}/tmp-glibc/deploy/images/${MACHINE}
   SDK_DIR=${BUILD_DIR}/tmp/deploy/sdk
   RELEASE=$(run_bitbake -e | grep ^DISTRO_VERSION | cut -d\" -f2)
   RELEASE_SDK_DIR=${DEPLOY_DIR}/${RELEASE}
@@ -144,7 +144,7 @@ update_deploy_dir()
   # Development image
   if ${IS_BUILD_MINIMAL_SD_IMAGE}
   then
-    cp -r ${IMAGES_DIR}/* ${RELEASE_DIR}
+    cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
   # SDK
   if ${IS_BUILD_SDK}
