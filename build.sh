@@ -18,6 +18,7 @@ MACHINE="raspberrypi"
 # What to do
 IS_BUILD_SDK=false
 IS_BUILD_MINIMAL_SD_IMAGE=false
+IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=false
 IS_SOURCE_ONLY=false
 
 ################################################################################
@@ -33,6 +34,7 @@ usage()
   echo "-V    Extra version to be appended to distro version"
   echo "-S    Build an SDK"
   echo "-D    Build a minimal sd image"
+  echo "-W    Build a minimal sd image with wifi config support"
   echo "-A    Build all"
 }
 
@@ -141,8 +143,13 @@ update_deploy_dir()
   RELEASE_DIR=${RELEASE_SDK_DIR}/${MACHINE}
   echo "Copying generated files in ${RELEASE_DIR} ..."
   mkdir -p ${RELEASE_DIR}
-  # Development image
+  # Minimal SD image
   if ${IS_BUILD_MINIMAL_SD_IMAGE}
+  then
+    cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
+  fi
+  # Minimal SD image with wifi config support
+  if ${IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT}
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
@@ -163,7 +170,7 @@ update_deploy_dir()
 # Main script
 # Default extra version
 export DISTRO_EXTRA_VERSION="-daily-$(date -u +%F-%H_%M_%S)"
-while getopts "huieM:V:SDA" FLAG; do
+while getopts "huieM:V:SDWA" FLAG; do
   case $FLAG in
     h)
       usage
@@ -190,9 +197,13 @@ while getopts "huieM:V:SDA" FLAG; do
     D)
       IS_BUILD_MINIMAL_SD_IMAGE=true
       ;;
+    W)
+      IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=true
+      ;;
     A)
       IS_BUILD_SDK=true
       IS_BUILD_MINIMAL_SD_IMAGE=true
+      IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=true
       ;;
     \?)
       usage
@@ -210,5 +221,6 @@ fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
 ${IS_BUILD_MINIMAL_SD_IMAGE} && run_bitbake core-image-base
+${IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT} && run_bitbake core-image-base-wifi
 update_deploy_dir
 echo "Compilation done succesfully!"
