@@ -34,7 +34,7 @@ usage()
   echo "-V    Extra version to be appended to distro version"
   echo "-S    Build an SDK"
   echo "-D    Build a minimal sd image"
-  echo "-W    Build a minimal sd image with wifi config support"
+  echo "-W    Build a minimal sd image with network setup support"
   echo "-A    Build all"
 }
 

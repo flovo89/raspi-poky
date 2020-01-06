@@ -4,4 +4,4 @@
 poky;http://git.yoctoproject.org/git/poky;master
 poky/meta-openembedded;https://github.com/openembedded/meta-openembedded.git;master
 poky/meta-raspberrypi;https://github.com/agherzan/meta-raspberrypi.git;master
-poky/meta-raspi-wifi-config;git@github.com:flovo89/meta-raspi-wifi-config.git;master
+poky/meta-raspi-network-setup;git@github.com:flovo89/meta-raspi-network-setup.git;master

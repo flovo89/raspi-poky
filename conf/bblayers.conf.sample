@@ -11,5 +11,5 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-openembedded/meta-networking \
   ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-raspberrypi \
-  ##OEROOT##/meta-raspi-wifi-config \
+  ##OEROOT##/meta-raspi-network-setup \
   "
