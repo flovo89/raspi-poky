@@ -18,7 +18,7 @@ MACHINE="raspberrypi"
 # What to do
 IS_BUILD_SDK=false
 IS_BUILD_MINIMAL_SD_IMAGE=false
-IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=false
+IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=false
 IS_SOURCE_ONLY=false
 
 ################################################################################
@@ -148,8 +148,8 @@ update_deploy_dir()
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
-  # Minimal SD image with wifi config support
-  if ${IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT}
+  # Minimal SD image with network config support
+  if ${IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE}
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
@@ -198,12 +198,12 @@ while getopts "huieM:V:SDWA" FLAG; do
       IS_BUILD_MINIMAL_SD_IMAGE=true
       ;;
     W)
-      IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=true
+      IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=true
       ;;
     A)
       IS_BUILD_SDK=true
       IS_BUILD_MINIMAL_SD_IMAGE=true
-      IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT=true
+      IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=true
       ;;
     \?)
       usage
@@ -221,6 +221,6 @@ fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
 ${IS_BUILD_MINIMAL_SD_IMAGE} && run_bitbake core-image-base
-${IS_BUILD_MINIMAL_SD_IMAGE_WIFI_SUPPORT} && run_bitbake core-image-base-wifi
+${IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE} && run_bitbake core-image-base-network-setup
 update_deploy_dir
 echo "Compilation done succesfully!"
