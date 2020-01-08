@@ -14,6 +14,8 @@ CONF_DIR="${PROJECT_BASE}/conf"
 BUILD_DIR="${PROJECT_BASE}/build"
 DEPLOY_DIR="${PROJECT_BASE}/deploy"
 MACHINE="raspberrypi"
+INTERFACES_CONTENT=""
+WPA_SUPPLICANT_CONF_CONTENT=""
 
 # What to do
 IS_BUILD_SDK=false
@@ -103,7 +105,7 @@ source_poky_env()
 {
   # Allow bitbake to get some variables form the environment
   export CONF_DIR
-  export BB_ENV_EXTRAWHITE="DISTRO_EXTRA_VERSION  CONF_DIR"
+  export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE DISTRO_EXTRA_VERSION CONF_DIR"
   export MACHINE
   # Make sure we have an environement ready
   cd ${PROJECT_BASE}
@@ -199,11 +201,17 @@ while getopts "huieM:V:SDWA" FLAG; do
       ;;
     W)
       IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=true
+      echo "Please enter path to interfaces file: "
+      read INTERFACES_FILE_PATH
+      echo "Please enter path to wpa_supplicant.conf file: "
+      read WPASUPPLICANT_FILE_PATH
+      export INTERFACES_CONTENT=$(cat ${INTERFACES_FILE_PATH})
+      export WPA_SUPPLICANT_CONF_CONTENT=$(cat ${WPASUPPLICANT_FILE_PATH})
+      BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE INTERFACES_CONTENT WPA_SUPPLICANT_CONF_CONTENT"
       ;;
     A)
       IS_BUILD_SDK=true
       IS_BUILD_MINIMAL_SD_IMAGE=true
-      IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=true
       ;;
     \?)
       usage
