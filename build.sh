@@ -14,8 +14,6 @@ CONF_DIR="${PROJECT_BASE}/conf"
 BUILD_DIR="${PROJECT_BASE}/build"
 DEPLOY_DIR="${PROJECT_BASE}/deploy"
 MACHINE="raspberrypi"
-INTERFACES_CONTENT=""
-WPA_SUPPLICANT_CONF_CONTENT=""
 
 # What to do
 IS_BUILD_SDK=false
@@ -93,9 +91,7 @@ init_poky_env()
   # Initialize the environment
   export TEMPLATECONF=${CONF_DIR}
   . ./oe-init-build-env ${BUILD_DIR} > /dev/null
-  # Workaround to the error "Do not use Bitbake as root." on jenkins.
-  # Implement better solution as fast as possible (really do not run Bitbake as root).
-  touch conf/sanity.conf
+  
   echo "Your poky environment is ready!"
 }
 
@@ -129,9 +125,9 @@ run_bitbake()
 build_sdk()
 {
   export SDKMACHINE="x86_64"
-  run_bitbake "-c populate_sdk stm32-prod-image"
+  run_bitbake "-c populate_sdk core-image-base"
   export SDKMACHINE="i686"
-  run_bitbake "-c populate_sdk stm32-prod-image"
+  run_bitbake "-c populate_sdk core-image-base"
 }
 
 ################################################################################
@@ -205,8 +201,8 @@ while getopts "huieM:V:SDWA" FLAG; do
       read INTERFACES_FILE_PATH
       echo "Please enter path to wpa_supplicant.conf file: "
       read WPASUPPLICANT_FILE_PATH
-      export INTERFACES_CONTENT=$(cat ${INTERFACES_FILE_PATH})
-      export WPA_SUPPLICANT_CONF_CONTENT=$(cat ${WPASUPPLICANT_FILE_PATH})
+      export INTERFACES_CONTENT=$(cat "${INTERFACES_FILE_PATH}")
+      export WPA_SUPPLICANT_CONF_CONTENT=$(cat "${WPASUPPLICANT_FILE_PATH}")
       BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE INTERFACES_CONTENT WPA_SUPPLICANT_CONF_CONTENT"
       ;;
     A)

@@ -50,3 +50,7 @@ CONF_VERSION = "1"
 
 # config to generate a source tarballs
 BB_GENERATE_MIRROR_TARBALLS = "1"
+
+# network config variables
+INTERFACES_CONTENT="needsToBeOverwritten"
+WPA_SUPPLICANT_CONF_CONTENT="needsToBeOverwritten"
