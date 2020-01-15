@@ -17,8 +17,7 @@ MACHINE="raspberrypi"
 
 # What to do
 IS_BUILD_SDK=false
-IS_BUILD_MINIMAL_SD_IMAGE=false
-IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=false
+IS_BUILD_SD_IMAGE=false
 IS_SOURCE_ONLY=false
 
 ################################################################################
@@ -33,8 +32,8 @@ usage()
   echo "-M    Machine selection (${MACHINE})"
   echo "-V    Extra version to be appended to distro version"
   echo "-S    Build an SDK"
-  echo "-D    Build a minimal sd image"
-  echo "-W    Build a minimal sd image with network setup support"
+  echo "-D    Build a sd image"
+  echo "-W    Enter network setup configuration files"
   echo "-A    Build all"
 }
 
@@ -141,13 +140,9 @@ update_deploy_dir()
   RELEASE_DIR=${RELEASE_SDK_DIR}/${MACHINE}
   echo "Copying generated files in ${RELEASE_DIR} ..."
   mkdir -p ${RELEASE_DIR}
-  # Minimal SD image
-  if ${IS_BUILD_MINIMAL_SD_IMAGE}
-  then
-    cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
-  fi
-  # Minimal SD image with network config support
-  if ${IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE}
+
+  # SD image with network config support
+  if ${IS_BUILD_SD_IMAGE}
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
@@ -193,10 +188,9 @@ while getopts "huieM:V:SDWA" FLAG; do
       IS_BUILD_SDK=true
       ;;
     D)
-      IS_BUILD_MINIMAL_SD_IMAGE=true
+      IS_BUILD_SD_IMAGE=true
       ;;
     W)
-      IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE=true
       echo "Please enter path to interfaces file: "
       read INTERFACES_FILE_PATH
       echo "Please enter path to wpa_supplicant.conf file: "
@@ -207,7 +201,7 @@ while getopts "huieM:V:SDWA" FLAG; do
       ;;
     A)
       IS_BUILD_SDK=true
-      IS_BUILD_MINIMAL_SD_IMAGE=true
+      IS_BUILD_SD_IMAGE=true
       ;;
     \?)
       usage
@@ -224,7 +218,6 @@ then
 fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
-${IS_BUILD_MINIMAL_SD_IMAGE} && run_bitbake core-image-base
-${IS_BUILD_MINIMAL_NETWORK_SETUP_SD_IMAGE} && run_bitbake core-image-base-network-setup
+${IS_BUILD_SD_IMAGE} && run_bitbake core-image-base-network-setup
 update_deploy_dir
 echo "Compilation done succesfully!"
