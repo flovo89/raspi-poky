@@ -13,5 +13,6 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-raspberrypi \
   ##OEROOT##/meta-raspi-network-setup \
   ##OEROOT##/meta-raspi-app \
+  ##OEROOT##/meta-swupdate \
   ##OEROOT##/meta-raspi-update \
   "
