@@ -18,6 +18,7 @@ MACHINE="raspberrypi"
 # What to do
 IS_BUILD_SDK=false
 IS_BUILD_SD_IMAGE=false
+IS_BUILD_UPDATE_PACKAGE=false
 IS_SOURCE_ONLY=false
 
 ################################################################################
@@ -33,6 +34,7 @@ usage()
   echo "-V    Extra version to be appended to distro version"
   echo "-S    Build an SDK"
   echo "-D    Build a sd image"
+  echo "-U    Build an update package"
   echo "-W    Enter network setup configuration files"
   echo "-A    Build all"
 }
@@ -146,6 +148,11 @@ update_deploy_dir()
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
   fi
+  # Update package to build
+  if ${IS_BUILD_UPDATE_PACKAGE}
+  then
+    cp -r ${IMAGES_DIR}/*.swu ${RELEASE_DIR}
+  fi
   # SDK
   if ${IS_BUILD_SDK}
   then
@@ -163,7 +170,7 @@ update_deploy_dir()
 # Main script
 # Default extra version
 export DISTRO_EXTRA_VERSION="-daily-$(date -u +%F-%H_%M_%S)"
-while getopts "huieM:V:SDWA" FLAG; do
+while getopts "huieM:V:SDUWA" FLAG; do
   case $FLAG in
     h)
       usage
@@ -190,6 +197,9 @@ while getopts "huieM:V:SDWA" FLAG; do
     D)
       IS_BUILD_SD_IMAGE=true
       ;;
+    U)
+      IS_BUILD_UPDATE_PACKAGE=true
+      ;;
     W)
       echo "Please enter path to interfaces file: "
       read INTERFACES_FILE_PATH
@@ -202,6 +212,7 @@ while getopts "huieM:V:SDWA" FLAG; do
     A)
       IS_BUILD_SDK=true
       IS_BUILD_SD_IMAGE=true
+      IS_BUILD_UPDATE_PACKAGE=true
       ;;
     \?)
       usage
@@ -219,5 +230,6 @@ fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
 ${IS_BUILD_SD_IMAGE} && run_bitbake core-image-base-network-setup
+${IS_BUILD_UPDATE_PACKAGE} && run_bitbake update-image
 update_deploy_dir
 echo "Compilation done succesfully!"

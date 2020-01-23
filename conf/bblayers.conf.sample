@@ -14,5 +14,5 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-raspi-network-setup \
   ##OEROOT##/meta-raspi-app \
   ##OEROOT##/meta-swupdate \
-  ##OEROOT##/meta-raspi-update \
+  ##OEROOT##/meta-swupdate-boards \
   "
