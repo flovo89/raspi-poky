@@ -238,9 +238,11 @@ while getopts "huieCM:V:SNDUWA" FLAG; do
 done
 # Check if workspace must be cleaned first
 if ${IS_CLEAN_WORKSPACE}
+then
+  echo "Cleaning workspace..."
   rm -rf build
   rm -rf poky
-then
+fi
 # Get ready to run poky
 if ${IS_SOURCE_ONLY}
 then
