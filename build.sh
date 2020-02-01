@@ -252,7 +252,7 @@ then
 fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
-${IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE} run_bitbake core-image-base-network-setup
+${IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE} && run_bitbake core-image-base-network-setup
 ${IS_BUILD_SD_IMAGE} && run_bitbake swupdate-image
 ${IS_BUILD_UPDATE_PACKAGE} && run_bitbake update-image
 update_deploy_dir
