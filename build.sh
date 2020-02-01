@@ -16,8 +16,10 @@ DEPLOY_DIR="${PROJECT_BASE}/deploy"
 MACHINE="raspberrypi"
 
 # What to do
+IS_CLEAN_WORKSPACE=false
 IS_BUILD_SDK=false
 IS_BUILD_SD_IMAGE=false
+IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE=false
 IS_BUILD_UPDATE_PACKAGE=false
 IS_SOURCE_ONLY=false
 
@@ -30,9 +32,11 @@ usage()
   echo "-u    Update meta-layers repositories"
   echo "-i    Init poky environment"
   echo "-e    Prepare shell to run poky"
+  echo "-C    Clean workspace"
   echo "-M    Machine selection (${MACHINE})"
   echo "-V    Extra version to be appended to distro version"
   echo "-S    Build an SDK"
+  echo "-N    Build minimal network setup image"
   echo "-D    Build a sd image"
   echo "-U    Build an update package"
   echo "-W    Enter network setup configuration files"
@@ -143,7 +147,12 @@ update_deploy_dir()
   echo "Copying generated files in ${RELEASE_DIR} ..."
   mkdir -p ${RELEASE_DIR}
 
-  # SD image with network config support
+  # SD image with minimal network config support
+  if ${IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE}
+  then
+    cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
+  fi
+  # SD image with network config support and swupdate tools
   if ${IS_BUILD_SD_IMAGE}
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
@@ -170,7 +179,7 @@ update_deploy_dir()
 # Main script
 # Default extra version
 export DISTRO_EXTRA_VERSION="-daily-$(date -u +%F-%H_%M_%S)"
-while getopts "huieM:V:SDUWA" FLAG; do
+while getopts "huieM:V:SNDUWA" FLAG; do
   case $FLAG in
     h)
       usage
@@ -185,6 +194,8 @@ while getopts "huieM:V:SDUWA" FLAG; do
     e)
       IS_SOURCE_ONLY=true
       ;;
+    C)
+      IS_CLEAN_WORKSPACE=true
     M)
       MACHINE="$OPTARG"
       ;;
@@ -193,6 +204,9 @@ while getopts "huieM:V:SDUWA" FLAG; do
       ;;
     S)
       IS_BUILD_SDK=true
+      ;;
+    N)
+      IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE=true
       ;;
     D)
       IS_BUILD_SD_IMAGE=true
@@ -211,6 +225,7 @@ while getopts "huieM:V:SDUWA" FLAG; do
       ;;
     A)
       IS_BUILD_SDK=true
+      IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE=true
       IS_BUILD_SD_IMAGE=true
       IS_BUILD_UPDATE_PACKAGE=true
       ;;
@@ -220,6 +235,11 @@ while getopts "huieM:V:SDUWA" FLAG; do
       ;;
   esac
 done
+# Check if workspace must be cleaned first
+if ${IS_CLEAN_WORKSPACE}
+  rm -rf build
+  rm -rf poky
+then
 # Get ready to run poky
 if ${IS_SOURCE_ONLY}
 then
@@ -229,6 +249,7 @@ then
 fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
+${IS_BUILD_MINIMAL_WIFI_SETUP_SD_IMAGE} run_bitbake core-image-base-network-setup
 ${IS_BUILD_SD_IMAGE} && run_bitbake swupdate-image
 ${IS_BUILD_UPDATE_PACKAGE} && run_bitbake update-image
 update_deploy_dir
