@@ -196,6 +196,7 @@ while getopts "huieM:V:SNDUWA" FLAG; do
       ;;
     C)
       IS_CLEAN_WORKSPACE=true
+      ;;
     M)
       MACHINE="$OPTARG"
       ;;
