@@ -179,7 +179,7 @@ update_deploy_dir()
 # Main script
 # Default extra version
 export DISTRO_EXTRA_VERSION="-daily-$(date -u +%F-%H_%M_%S)"
-while getopts "huieM:V:SNDUWA" FLAG; do
+while getopts "huieCM:V:SNDUWA" FLAG; do
   case $FLAG in
     h)
       usage
