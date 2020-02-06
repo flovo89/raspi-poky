@@ -14,6 +14,8 @@ CONF_DIR="${PROJECT_BASE}/conf"
 BUILD_DIR="${PROJECT_BASE}/build"
 DEPLOY_DIR="${PROJECT_BASE}/deploy"
 MACHINE="raspberrypi"
+WPA_SUPPLICANT_CONF_CONTENT="mustBeChanged"
+INTERFACES_CONTENT="mustBeChanged"
 
 # What to do
 IS_CLEAN_WORKSPACE=false
