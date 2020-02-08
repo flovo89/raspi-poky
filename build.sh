@@ -14,8 +14,8 @@ CONF_DIR="${PROJECT_BASE}/conf"
 BUILD_DIR="${PROJECT_BASE}/build"
 DEPLOY_DIR="${PROJECT_BASE}/deploy"
 MACHINE="raspberrypi"
-WPA_SUPPLICANT_CONF_CONTENT="mustBeChanged"
-INTERFACES_CONTENT="mustBeChanged"
+WPA_SUPPLICANT_CONF_CONTENT=$(cat "${PROJECT_BASE}/examples/network/wpa_supplicant.conf")
+INTERFACES_CONTENT=$(cat "${PROJECT_BASE}/examples/network/interfaces")
 
 # What to do
 IS_CLEAN_WORKSPACE=false
