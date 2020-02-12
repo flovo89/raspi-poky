@@ -151,6 +151,7 @@ update_deploy_dir()
   if ${IS_BUILD_SD_IMAGE}
   then
     cp -r ${IMAGES_DIR}/*rpi-sdimg ${RELEASE_DIR}
+    cp -r ${IMAGES_DIR}/*.wic ${RELEASE_DIR}
   fi
   # Update package to build
   if ${IS_BUILD_UPDATE_PACKAGE}
