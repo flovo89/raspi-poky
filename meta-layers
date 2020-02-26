@@ -8,4 +8,5 @@ poky/meta-raspi-network-setup;git@github.com:flovo89/meta-raspi-network-setup.gi
 poky/meta-swupdate;https://github.com/sbabic/meta-swupdate.git;zeus
 poky/meta-swupdate-boards;git@github.com:flovo89/meta-swupdate-boards.git;master
 poky/meta-raspi-app;git@github.com:flovo89/meta-raspi-app.git;tensorflow-integration
-poky/meta-tensorflow;https://github.com/Wind-River/meta-tensorflow.git;master
+poky/meta-tensorflow;git@github.com:flovo89/meta-tensorflow.git;master
+poky/meta-python2;https://github.com/YoeDistro/meta-python2.git;zeus
