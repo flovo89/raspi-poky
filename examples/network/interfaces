@@ -2,7 +2,12 @@
 auto lo
 iface lo inet loopback
 
+# The eth0 interface
+auto eth0
+iface eth0 inet dhcp
+
 # Wireless interfaces
+auto wlan0
 iface wlan0 inet dhcp
 	wireless_mode managed
 	wireless_essid any
