@@ -16,4 +16,5 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-swupdate-boards \
   ##OEROOT##/meta-raspi-app \
   ##OEROOT##/meta-tensorflow \
+  ##OEROOT##/meta-python2 \
   "
