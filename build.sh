@@ -8,7 +8,7 @@ set -e
 ################################################################################
 # Variables
 PROJECT_BASE=$(pwd)
-POKY_BASE=${PROJECT_BASE}/poky
+POKY_BASE=${PROJECT_BASE}/sources/poky
 META_LAYERS_FILE=meta-layers
 CONF_DIR="${PROJECT_BASE}/conf"
 BUILD_DIR="${PROJECT_BASE}/build"
@@ -94,7 +94,7 @@ init_poky_env()
     fi
   fi
   # Initialize the environment
-  export TEMPLATECONF=${CONF_DIR}
+  export TEMPLATECONF=${PROJECT_BASE}/sources/meta-raspi-app/conf/templates/complete
   . ./oe-init-build-env ${BUILD_DIR} > /dev/null
   
   echo "Your poky environment is ready!"
@@ -106,7 +106,7 @@ source_poky_env()
 {
   # Allow bitbake to get some variables form the environment
   export CONF_DIR
-  export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE DISTRO_EXTRA_VERSION CONF_DIR"
+  export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS DISTRO_EXTRA_VERSION CONF_DIR"
   export MACHINE
   # Make sure we have an environement ready
   cd ${PROJECT_BASE}
@@ -214,7 +214,7 @@ while getopts "huieCM:V:SDUWA" FLAG; do
       read WPASUPPLICANT_FILE_PATH
       export INTERFACES_CONTENT=$(cat "${INTERFACES_FILE_PATH}")
       export WPA_SUPPLICANT_CONF_CONTENT=$(cat "${WPASUPPLICANT_FILE_PATH}")
-      BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE INTERFACES_CONTENT WPA_SUPPLICANT_CONF_CONTENT"
+      BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS INTERFACES_CONTENT WPA_SUPPLICANT_CONF_CONTENT"
       ;;
     A)
       IS_BUILD_SDK=true
