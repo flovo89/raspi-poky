@@ -94,7 +94,7 @@ init_poky_env()
     fi
   fi
   # Initialize the environment
-  export TEMPLATECONF=${PROJECT_BASE}/sources/meta-raspi-app/conf/templates/complete
+  export TEMPLATECONF=${PROJECT_BASE}/sources/meta-raspi-app/conf/templates/mediabox
   . ./oe-init-build-env ${BUILD_DIR} > /dev/null
   
   echo "Your poky environment is ready!"
@@ -140,7 +140,7 @@ build_sdk()
 update_deploy_dir()
 {
   IMAGES_DIR=${BUILD_DIR}/tmp-glibc/deploy/images/${MACHINE}
-  SDK_DIR=${BUILD_DIR}/tmp/deploy/sdk
+  SDK_DIR=${BUILD_DIR}/tmp-glibc/deploy/sdk
   RELEASE=$(run_bitbake -e | grep ^DISTRO_VERSION | cut -d\" -f2)
   RELEASE_SDK_DIR=${DEPLOY_DIR}/${RELEASE}
   RELEASE_DIR=${RELEASE_SDK_DIR}/${MACHINE}
@@ -150,7 +150,7 @@ update_deploy_dir()
   # SD image with network config support and swupdate tools
   if ${IS_BUILD_SD_IMAGE}
   then
-    cp -r ${IMAGES_DIR}/*.wic ${RELEASE_DIR}
+    cp -r ${IMAGES_DIR}/*.wic.bz2 ${RELEASE_DIR}
   fi
   # Update package to build
   if ${IS_BUILD_UPDATE_PACKAGE}
