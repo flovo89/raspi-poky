@@ -243,7 +243,7 @@ then
 fi
 # Build things in order of amount of work (more to less)
 ${IS_BUILD_SDK} && build_sdk
-${IS_BUILD_SD_IMAGE} && run_bitbake swupdate-image
-${IS_BUILD_UPDATE_PACKAGE} && run_bitbake update-image
+${IS_BUILD_SD_IMAGE} && run_bitbake update-image
+${IS_BUILD_UPDATE_PACKAGE} && run_bitbake swupdate-image
 update_deploy_dir
 echo "Compilation done succesfully!"

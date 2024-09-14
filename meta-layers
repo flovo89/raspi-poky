@@ -4,7 +4,6 @@
 sources/poky;http://git.yoctoproject.org/git/poky;scarthgap
 sources/meta-openembedded;https://github.com/openembedded/meta-openembedded.git;scarthgap
 sources/meta-raspberrypi;https://github.com/agherzan/meta-raspberrypi.git;scarthgap
-sources/meta-raspi-network-setup;https://github.com/flovo89/meta-raspi-network-setup.git;master
 sources/meta-swupdate;https://github.com/sbabic/meta-swupdate.git;scarthgap
 sources/meta-swupdate-boards;https://github.com/sbabic/meta-swupdate-boards.git;master
 sources/meta-raspi-app;https://github.com/flovo89/meta-raspi-app.git;scarthgap
