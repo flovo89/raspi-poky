@@ -6,5 +6,6 @@ sources/meta-openembedded;https://github.com/openembedded/meta-openembedded.git;
 sources/meta-raspberrypi;https://github.com/agherzan/meta-raspberrypi.git;scarthgap
 sources/meta-swupdate;https://github.com/sbabic/meta-swupdate.git;scarthgap
 sources/meta-swupdate-boards;https://github.com/sbabic/meta-swupdate-boards.git;scarthgap
+sources/meta-rust;https://github.com/meta-rust/meta-rust.git;scarthgap
 sources/meta-iot-cloud;https://github.com/intel-iot-devkit/meta-iot-cloud.git;scarthgap
 sources/meta-raspi-app;https://github.com/flovo89/meta-raspi-app.git;scarthgap

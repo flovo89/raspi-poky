@@ -208,12 +208,10 @@ while getopts "huieCM:V:SDUWA" FLAG; do
       IS_BUILD_UPDATE_PACKAGE=true
       ;;
     W)
-      echo "Please enter path to interfaces file: "
-      read INTERFACES_FILE_PATH
-      echo "Please enter path to wpa_supplicant.conf file: "
-      read WPASUPPLICANT_FILE_PATH
-      export INTERFACES_CONTENT=$(cat "${INTERFACES_FILE_PATH}")
-      export WPA_SUPPLICANT_CONF_CONTENT=$(cat "${WPASUPPLICANT_FILE_PATH}")
+      echo "Please enter path to interfaces file and wpa_supplicant.conf: "
+      read NETWORK_SETTINGS_FILE_PATH
+      export INTERFACES_CONTENT=$(cat "${NETWORK_SETTINGS_FILE_PATH}/interfaces")
+      export WPA_SUPPLICANT_CONF_CONTENT=$(cat "${NETWORK_SETTINGS_FILE_PATH}/wpa_supplicant.conf")
       BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS INTERFACES_CONTENT WPA_SUPPLICANT_CONF_CONTENT"
       ;;
     A)
